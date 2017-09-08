@@ -37,6 +37,7 @@ namespace BgTest2
 
         static void Main(string[] args)
         {
+            Console.WriteLine("Initiazlizing..");
             //Attach an exit event handler
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(CurrentDomain_ProcessExit);
             //get the current wallpaper path, to clear the screen after app exit
@@ -49,16 +50,17 @@ namespace BgTest2
             // Send 0x052C to Progman. This message directs Progman to spawn a 
             // WorkerW behind the desktop icons. If it is already there, nothing 
             // happens.
+            Console.WriteLine("Sending messege to progman");
             SendMessage(progman,
                         0x052C,
                         new IntPtr(0),
                         IntPtr.Zero);
 
+            Console.WriteLine("Searching for correct WorkerW");
             while (!findWorkerW()) {
                 Console.WriteLine("WorkerW not found, trying again!");
             }
             Console.WriteLine("Correct WorkerW found!");
-
 
             if (workerw != null) {
                 deviceContext = GetDCEx(workerw, IntPtr.Zero, (WinApi.User32.DeviceContextFlags)0x403);
@@ -72,6 +74,8 @@ namespace BgTest2
                         
                         Console.WriteLine("Filling Rect");
                         g.FillRectangle(new SolidBrush(Color.Red), 100, 100, 500, 500);
+                        g.FillRectangle(new SolidBrush(Color.Green), 200, 200, 500, 500);
+                        g.FillRectangle(new SolidBrush(Color.Blue), 300, 300, 500, 500);
                         g.Flush();
 
                         g.Dispose();
@@ -79,7 +83,7 @@ namespace BgTest2
                     
                 }
             }
-            Thread.Sleep(1000);
+            Thread.Sleep(10000);
         }
 
         static bool findWorkerW() {
