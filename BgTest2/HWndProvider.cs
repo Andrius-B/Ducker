@@ -64,7 +64,7 @@ namespace liveDesktop
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("WorkerW Found");
                 Console.ResetColor();
-            } else
+            } else if(conf.GetInstance().debug && workerw == IntPtr.Zero)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("WorkerW not found!");

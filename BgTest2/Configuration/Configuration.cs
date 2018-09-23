@@ -8,6 +8,6 @@ namespace liveDesktop.Configuration
 {
     class Configuration
     {
-        public bool debug = true;
+        public bool debug = false;
     }
 }
