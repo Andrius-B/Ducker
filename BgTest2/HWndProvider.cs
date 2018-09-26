@@ -10,7 +10,7 @@ namespace liveDesktop
 {
     static class HWndProvider
     {
-        public static IntPtr GetHandle() {
+        public static IntPtr GetWorkerWHandle() {
             if(conf.GetInstance().debug)Console.WriteLine("HWndProvider:GetHandle()");
             IntPtr hWnd = IntPtr.Zero;
 
