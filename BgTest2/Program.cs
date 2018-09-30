@@ -11,7 +11,11 @@ namespace liveDesktop
 {
     class Program
     {
-
+        /* note:
+         * to repack the exe and include the beautiful CommandLine dlls run:
+         * ILRepack.exe /out:ducker.exe ./BgTest2/bin/Release/BgTest2.exe ./BgTest2/bin/Release/CommandLine.dll
+         * with the nuget console
+         */
 
         [Verb("duck", HelpText = "Duck windows beneath the desktop.")]
         public class DuckOptions {
@@ -78,23 +82,18 @@ namespace liveDesktop
                 SetParentWindow(childWindowHandle, desktopWnd);
             }
 
+            Clear(new ClearOptions() { Verbose = false });
+
             return 0;
         }
+
+        const uint SPI_SETDESKWALLPAPER = 20;
+        const int SPIF_UPDATEINIFILE = 0x01;
+        const int SPIF_SENDWININICHANGE = 0x02;
 
         static int Clear(ClearOptions copts) {
             conf.GetInstance().debug = copts.Verbose;
             string wpPath = WinApi.GetCurrentWallpaperPath();
-
-            //WinApi.PaintDesktop(WinApi.GetDC(desktopWnd));
-
-            uint SPI_SETDESKWALLPAPER = 20;
-            int SPIF_UPDATEINIFILE = 0x01;
-            int SPIF_SENDWININICHANGE = 0x02;
-            //WinApi.SystemParametersInfo(SPI_SETDESKWALLPAPER,
-            //                            0,
-            //                            "",
-            //                            SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
-
             WinApi.SystemParametersInfo(SPI_SETDESKWALLPAPER,
                                         0,
                                         wpPath,
